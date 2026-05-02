@@ -1,32 +1,33 @@
-# 🏋️ Next Rep — AI Fitness Assistant (RAG)
+# 🏋️ Next Rep — AI Fitness Assistant (PDF RAG)
 
-Welcome to **Next Rep**, your high-performance AI fitness coach. This project is a Retrieval-Augmented Generation (RAG) chatbot designed to provide accurate, science-based answers to your fitness, nutrition, and recovery questions.
+Welcome to **Next Rep**, your high-performance AI fitness coach. This project is a **Retrieval-Augmented Generation (RAG)** chatbot designed to provide accurate, science-based answers to your fitness, nutrition, and recovery questions by reading directly from your custom PDF knowledge base.
 
 ---
 
 ## 🎓 Teacher's Corner: How it Works?
 
-Hello, student! Let's understand how this "brain" works. Imagine you have a massive library of fitness books (your data), but you don't want to read them all every time someone asks a question.
+Hello, student! Let's understand how this "brain" works. Imagine you have a massive library of fitness books (your PDF), but you don't want to read them all every time someone asks a question.
 
 ### 🔄 The RAG Pipeline (Step-by-Step)
 
 1.  **Preparation (The Library Index):**
-    *   We take a dataset of fitness questions and answers (`fitness.jsonl`).
-    *   We turn every question into a list of numbers called an **Embedding** (using a `SentenceTransformer` model).
-    *   We store these numbers in a specialized database called a **FAISS Index**. This is like a very fast "search engine" for meanings.
+    *   We take your fitness knowledge PDF (`Fitness_RAG_Knowledge_Base.pdf`).
+    *   We split the PDF into small, readable "chunks" (paragraphs).
+    *   We turn every chunk into a list of numbers called an **Embedding** (using a `SentenceTransformer` model).
+    *   We store these numbers in a specialized database called a **FAISS Index** inside the `KnowledgeBase` folder. This is like a very fast "search engine" for meanings.
 
 2.  **The User Asks (The Query):**
     *   When you type *"How much protein do I need?"*, the chatbot turns your question into the same kind of "number list" (embedding).
 
 3.  **The Search (Retrieval):**
-    *   It looks into the **FAISS Index** to find the most similar numbers. It says, *"Hey, I found 4 books that talk about protein!"*
+    *   It looks into the **FAISS Index** to find the most similar chunks. It says, *"Hey, I found 5 sections in the PDF that talk about protein!"*
 
 4.  **The Answer (Generation):**
-    *   The chatbot takes those 4 matching snippets and hands them to a very smart AI (Llama 3 via Groq).
-    *   It tells the AI: *"Using ONLY these snippets, answer the user's question."*
+    *   The chatbot takes those matching snippets and hands them to a very smart AI (Llama 3 via Groq).
+    *   It tells the AI: *"Using ONLY these snippets from the PDF, answer the user's question."*
     *   The AI writes a friendly, helpful response based **only** on the facts it was just given.
 
-**Why is this better?** Because the AI doesn't "hallucinate" (make things up). If it's not in the library, it says *"I don't know,"* keeping you safe and informed!
+**Why is this better?** Because the AI doesn't "hallucinate" (make things up). If it's not in the PDF, it can still use its general expertise if the question is fitness-related, or politely refuse if it's off-topic!
 
 ---
 
@@ -66,33 +67,54 @@ You need an API key from **Groq** (it's fast and free to start!).
 
 ## 🚀 How to Run
 
-Once everything is set up, starting the coach is easy:
+### Step 1: Process the Knowledge Base
+If you have updated your PDF or are running for the first time, you need to "index" the data:
+```bash
+python embeddings.py
+```
+This will create the files inside the `KnowledgeBase` folder.
 
+### Step 2: Start the Chatbot
+Once indexed, start the dashboard:
 ```bash
 streamlit run app.py
 ```
-This will open a beautiful dark-themed dashboard in your browser where you can start chatting!
+This will open a beautiful dark-themed dashboard in your browser with a premium teal/cyan aesthetic.
 
 ---
 
 ## 📁 Project Structure
 
-Here is what each file does:
+```text
+Fitness-Chatbot/
+├── KnowledgeBase/
+│   ├── Fitness_RAG_Knowledge_Base.pdf  # 📚 Raw Knowledge Source
+│   ├── fitness.index                   # 🧠 FAISS Vector Index (Search Engine)
+│   └── texts.json                      # 📄 Processed text chunks for AI context
+├── app.py                              # 🚀 Main Streamlit Application (Frontend + Logic)
+├── embeddings.py                       # 🛠️ Data Processing & Indexing Script
+├── requirements.txt                    # 📦 Python Dependencies
+├── .env                                # 🔑 Private API Keys (Groq)
+└── .gitignore                          # 🙈 Files to exclude from Git
+```
 
-*   📂 **`app.py`**: The heart of the project. It handles the **Streamlit UI**, the chat logic, and communicates with Groq.
-*   📂 **`embeddings.py`**: The "librarian" script. Use this if you want to update the knowledge base or re-index your data.
-*   📂 **`fitness.index`**: The "Search Engine" file. It contains the mathematical representations (vectors) of all fitness data.
-*   📂 **`texts.json`**: The "Bookshelf". This holds the actual text of the questions and answers that the AI reads.
-*   📂 **`requirements.txt`**: The list of all Python libraries needed (Streamlit, Faiss, Sentence-Transformers, etc.).
-*   📂 **`.env`**: Your secret vault for API keys (never share this!).
-*   📂 **`.gitignore`**: Tells Git which files to ignore (like your private `.env`).
+### File Details:
+*   📂 **`app.py`**: The heart of the coach. It manages the **Streamlit UI**, user session state, RAG retrieval logic, and streams responses from Llama 3.3.
+*   📂 **`embeddings.py`**: The "Ingestion" engine. It extracts text from the PDF, cleans it, splits it into overlapping chunks, and generates the FAISS index.
+*   📂 **`KnowledgeBase/`**: This folder houses the brain of the bot. If you update the PDF, you must re-run `embeddings.py` to refresh the index.
+*   📂 **`requirements.txt`**: Contains all necessary libraries including `pdfplumber` for PDF parsing and `faiss-cpu` for vector search.
+*   📂 **`.env`**: Contains your `GROQ_API_KEY`. **Keep this file private!**
+
 
 ---
 
 ## 🌟 Key Features
-- **Dark Mode UI**: Sleek, premium fitness aesthetic.
-- **Relevance Scores**: See how confident the AI is about its source material.
-- **Debug Mode**: Toggle the sidebar to see exactly what snippets the AI is looking at.
-- **History Tracking**: Keeps a list of your recent questions in the sidebar.
+- **Premium Teal Theme**: Sleek, high-performance aesthetic matching modern fitness apps.
+- **3-Tier Answer Logic**:
+    1.  **PDF Grounded**: Answers directly from your PDF documents.
+    2.  **General Expertise**: Answers from AI knowledge if PDF doesn't have it (fitness only).
+    3.  **Topic Guard**: Refuses off-topic questions (e.g., about movies or politics).
+- **Relevance Scores**: See how closely the AI's source material matches your question.
+- **Debug Mode**: Toggle the sidebar to see exactly which PDF snippets the AI is using.
 
 **Happy Training! 🏋️‍♂️**

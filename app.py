@@ -488,7 +488,7 @@ st.markdown("""
 html, body, [class*="css"] { font-family: 'Barlow', sans-serif; }
 
 /* ── app background ── */
-.stApp { background: #07090f; }
+.stApp { background: #000000; }
 .main .block-container {
     padding-top: 1.4rem;
     padding-bottom: 7rem;
@@ -497,8 +497,8 @@ html, body, [class*="css"] { font-family: 'Barlow', sans-serif; }
 
 /* ── sidebar ── */
 section[data-testid="stSidebar"] {
-    background: #0c0f18;
-    border-right: 1px solid #1c2333;
+    background: #080b10;
+    border-right: 1px solid #1a1a1a;
 }
 
 /* ── chat messages ── */
@@ -506,30 +506,42 @@ section[data-testid="stSidebar"] {
 
 /* user bubble */
 [data-testid="stChatMessage"][data-role="user"] .stMarkdown p {
-    background: #131c2e;
-    border: 1px solid #1e2d47;
+    background: #111111;
+    border: 1px solid #222222;
     border-radius: 18px 18px 4px 18px;
     padding: 11px 17px;
     display: inline-block;
     max-width: 84%;
     float: right;
-    color: #dde5f0;
+    color: #00f5d4;
+    box-shadow: 0 4px 15px rgba(0, 245, 212, 0.05);
 }
 
 /* assistant text */
 [data-testid="stChatMessage"][data-role="assistant"] .stMarkdown p,
 [data-testid="stChatMessage"][data-role="assistant"] .stMarkdown li {
-    color: #c8d4e3;
+    color: #e0e0e0;
     line-height: 1.75;
 }
 
 /* ── chat input ── */
 [data-testid="stChatInput"] > div {
-    background: #101520 !important;
-    border: 1px solid #1c2333 !important;
+    background: #111111 !important;
+    border: 1px solid #222222 !important;
     border-radius: 14px !important;
 }
-[data-testid="stChatInput"] textarea { color: #dde5f0 !important; }
+[data-testid="stChatInput"] textarea { color: #ffffff !important; }
+
+/* chat submit button */
+button[data-testid="stChatInputSubmitButton"] {
+    background-color: #00f5d4 !important;
+    color: #000000 !important;
+    border-radius: 10px !important;
+}
+button[data-testid="stChatInputSubmitButton"]:hover {
+    background-color: #00d1b5 !important;
+    box-shadow: 0 0 10px rgba(0, 245, 212, 0.4) !important;
+}
 
 /* ── tier / confidence badge ── */
 .badge {
@@ -538,35 +550,39 @@ section[data-testid="stSidebar"] {
     font-size: 0.71rem; font-weight: 700;
     margin-top: 7px; letter-spacing: 0.05em;
 }
-.badge-rag    { background:rgba(34,197,94,.12);  color:#22c55e; border:1px solid rgba(34,197,94,.3); }
-.badge-llm    { background:rgba(250,204,21,.12); color:#facc15; border:1px solid rgba(250,204,21,.3); }
-.badge-off    { background:rgba(239,68,68,.12);  color:#ef4444; border:1px solid rgba(239,68,68,.3); }
+.badge-rag    { background:rgba(0, 245, 212, 0.1);  color:#00f5d4; border:1px solid rgba(0, 245, 212, 0.3); }
+.badge-llm    { background:rgba(250,204,21, .1); color:#facc15; border:1px solid rgba(250,204,21, .3); }
+.badge-off    { background:rgba(239,68,68, .1);  color:#ef4444; border:1px solid rgba(239,68,68, .3); }
 
 /* ── suggestion buttons ── */
 div[data-testid="stButton"] > button {
-    background: #101520; border: 1px solid #1c2333;
-    color: #8899bb; border-radius: 999px;
+    background: #111111; border: 1px solid #222222;
+    color: #888888; border-radius: 999px;
     padding: 8px 18px; font-size: 0.84rem;
-    transition: all 0.18s;
+    transition: all 0.2s ease;
 }
 div[data-testid="stButton"] > button:hover {
-    border-color: #f97316; color: #f97316;
-    background: rgba(249,115,22,.07);
+    border-color: #00f5d4; color: #00f5d4;
+    background: rgba(0, 245, 212, 0.05);
+    box-shadow: 0 0 10px rgba(0, 245, 212, 0.2);
 }
 
 /* new-chat button */
-div[data-testid="stButton"]:first-child > button {
-    background: #f97316; border-color: #f97316;
+div[data-testid="stSidebar"] div[data-testid="stButton"] > button {
+    background: #00f5d4; border-color: #00f5d4;
     color: #000; font-weight: 700; letter-spacing: 0.05em;
     border-radius: 8px;
 }
-div[data-testid="stButton"]:first-child > button:hover { background: #e56b10; }
+div[data-testid="stSidebar"] div[data-testid="stButton"] > button:hover { 
+    background: #00d1b5; 
+    box-shadow: 0 0 15px rgba(0, 245, 212, 0.4);
+}
 
 /* ── debug panel ── */
 .debug-box {
-    background: #0c0f18; border: 1px solid #1c2333;
+    background: #080b10; border: 1px solid #1a1a1a;
     border-radius: 8px; padding: 10px 14px;
-    font-size: 0.73rem; color: #4b5e80;
+    font-size: 0.73rem; color: #666666;
     margin-top: 6px; font-family: monospace;
     line-height: 1.6;
 }
@@ -575,14 +591,14 @@ div[data-testid="stButton"]:first-child > button:hover { background: #e56b10; }
 .footer {
     position: fixed; bottom: 0; left: 0; right: 0;
     text-align: center; padding: 8px;
-    font-size: 0.67rem; color: #2d3a50;
+    font-size: 0.67rem; color: #444444;
     pointer-events: none;
 }
 
 /* ── scrollbar ── */
 ::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: #07090f; }
-::-webkit-scrollbar-thumb { background: #1c2333; border-radius: 4px; }
+::-webkit-scrollbar-track { background: #000000; }
+::-webkit-scrollbar-thumb { background: #222222; border-radius: 4px; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -639,8 +655,8 @@ def is_fitness_related(query: str) -> bool:
 @st.cache_resource
 def load_resources():
     try:
-        index  = faiss.read_index("fitness.index")
-        with open("texts.json", "r", encoding="utf-8") as f:
+        index  = faiss.read_index(os.path.join("KnowledgeBase", "fitness.index"))
+        with open(os.path.join("KnowledgeBase", "texts.json"), "r", encoding="utf-8") as f:
             texts = json.load(f)
         model  = SentenceTransformer("all-MiniLM-L6-v2")
         client = Groq(api_key=os.getenv("GROQ_API_KEY"))
@@ -705,7 +721,6 @@ The user asked a fitness question that isn't covered in the app's knowledge base
 Answer using your general fitness expertise.
 Rules:
 - Be clear, practical, and encouraging.
-- Mention at the start that this is general guidance, not from the app's specific knowledge base.
 - Use bullet points or short paragraphs.
 - Keep it concise and actionable.
 - Do NOT give medical diagnoses. Always recommend consulting a professional for medical concerns.
@@ -775,7 +790,7 @@ for key, default in [
 with st.sidebar:
     st.markdown(
         "<h1 style='text-align:center;font-family:\"Barlow Condensed\",sans-serif;"
-        "letter-spacing:.1em;color:#f97316;margin-bottom:0'>NEXT REP</h1>"
+        "letter-spacing:.1em;color:#00f5d4;margin-bottom:0'>NEXT REP</h1>"
         "<p style='text-align:center;color:#2d3a50;font-size:.78rem;margin-top:2px'>AI Fitness Coach</p>",
         unsafe_allow_html=True,
     )
@@ -821,7 +836,7 @@ with st.sidebar:
 # ─────────────────────────────────────────────────────────
 st.markdown(
     "<h2 style='font-family:\"Barlow Condensed\",sans-serif;font-size:2.1rem;"
-    "letter-spacing:.07em;color:#f97316;margin-bottom:0'>NEXT REP</h2>"
+    "letter-spacing:.07em;color:#00f5d4;margin-bottom:0'>NEXT REP</h2>"
     "<p style='color:#2d3a50;margin-top:0'>AI Fitness Coach — ask anything about training, nutrition & recovery.</p>",
     unsafe_allow_html=True,
 )
@@ -871,12 +886,20 @@ if not st.session_state.messages:
     cols = st.columns(3)
     for i, s in enumerate(suggestions):
         if cols[i % 3].button(s, key=f"sug_{i}"):
-            st.session_state.messages.append({"role": "user", "content": s})
-            st.session_state.past_questions.append(s)
+            st.session_state.active_prompt = s
             st.rerun()
 
 # ── Chat input ───────────────────────────────────────────
-if prompt := st.chat_input("Ask Next Rep anything about fitness…"):
+user_input = st.chat_input("Ask Next Rep anything about fitness…")
+
+# Trigger response if user types OR clicks a suggestion
+prompt = None
+if user_input:
+    prompt = user_input
+elif "active_prompt" in st.session_state:
+    prompt = st.session_state.pop("active_prompt")
+
+if prompt:
 
     st.session_state.messages.append({"role": "user", "content": prompt})
     st.session_state.past_questions.append(prompt)

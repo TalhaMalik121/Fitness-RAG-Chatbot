@@ -135,6 +135,7 @@ Run once (or whenever the PDF changes):
 
 import json
 import re
+import os
 import pdfplumber
 import numpy as np
 import faiss
@@ -144,9 +145,9 @@ from sentence_transformers import SentenceTransformer
 # ─────────────────────────────────────────────────────────
 # CONFIG
 # ─────────────────────────────────────────────────────────
-PDF_PATH     = "Fitness_RAG_Knowledge_Base.pdf"
-INDEX_OUT    = "fitness.index"
-TEXTS_OUT    = "texts.json"
+PDF_PATH     = os.path.join("KnowledgeBase", "Fitness_RAG_Knowledge_Base.pdf")
+INDEX_OUT    = os.path.join("KnowledgeBase", "fitness.index")
+TEXTS_OUT    = os.path.join("KnowledgeBase", "texts.json")
 MODEL_NAME   = "all-MiniLM-L6-v2"
 
 CHUNK_WORDS  = 400   # target words per chunk
