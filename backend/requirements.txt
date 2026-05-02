@@ -1,0 +1,13 @@
+fastapi
+uvicorn
+pydantic
+python-dotenv
+groq
+faiss-cpu
+sentence-transformers
+pdfplumber
+numpy
+torch
+tqdm
+python-multipart
+cors
