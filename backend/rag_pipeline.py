@@ -40,16 +40,26 @@ def is_fitness_related(query: str) -> bool:
 
 class RAGPipeline:
     def __init__(self):
-        # Paths relative to backend/
-        index_path = os.path.join("KnowledgeBase", "fitness.index")
-        texts_path = os.path.join("KnowledgeBase", "texts.json")
+        # Use absolute paths relative to this file
+        BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+        index_path = os.path.join(BASE_DIR, "KnowledgeBase", "fitness.index")
+        texts_path = os.path.join(BASE_DIR, "KnowledgeBase", "texts.json")
         
+        if not os.path.exists(index_path) or not os.path.exists(texts_path):
+            print(f"CRITICAL ERROR: Knowledge base files not found at {index_path} or {texts_path}")
+            # Try fallback to project root if needed
+            index_path = os.path.join("backend", "KnowledgeBase", "fitness.index")
+            texts_path = os.path.join("backend", "KnowledgeBase", "texts.json")
+
         self.index = faiss.read_index(index_path)
         with open(texts_path, "r", encoding="utf-8") as f:
             self.texts = json.load(f)
             
         self.model = SentenceTransformer("all-MiniLM-L6-v2")
-        self.client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+        api_key = os.getenv("GROQ_API_KEY")
+        if not api_key:
+            print("ERROR: GROQ_API_KEY is missing from environment variables!")
+        self.client = Groq(api_key=api_key)
 
     def search(self, query: str, k: int = TOP_K):
         cleaned = clean_for_embedding(query)
