@@ -7,10 +7,10 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        accent: "#00f5d4",
-        background: "#000000",
-        sidebar: "#080b10",
-        card: "#111111",
+        accent: "#f59e0b", // Warm Amber
+        background: "#020617", // Deep Navy
+        sidebar: "#0f172a", // Slate 900
+        card: "#1e293b", // Slate 800
       },
       fontFamily: {
         sans: ['Barlow', 'sans-serif'],

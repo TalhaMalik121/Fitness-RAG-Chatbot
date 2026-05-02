@@ -4,7 +4,7 @@ from pydantic import BaseModel
 from rag_pipeline import RAGPipeline
 import uvicorn
 
-app = FastAPI(title="Next Rep Fitness API")
+app = FastAPI(title="Fitness Coach API")
 
 # Enable CORS for React frontend
 app.add_middleware(
@@ -26,7 +26,7 @@ class ChatResponse(BaseModel):
 
 @app.get("/")
 async def root():
-    return {"message": "Next Rep Fitness API is running"}
+    return {"message": "Fitness Coach API is running"}
 
 @app.post("/chat", response_model=ChatResponse)
 async def chat(request: ChatRequest):

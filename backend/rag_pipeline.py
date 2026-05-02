@@ -102,7 +102,7 @@ class RAGPipeline:
 
     def prompt_rag(self, query: str, chunks: list[dict]):
         ctx = "\n\n".join([f"[Source {i+1}]\n{c['text']}" for i, c in enumerate(chunks)])
-        return f"""You are Next Rep, an expert AI fitness coach.
+        return f"""You are Fitness Coach, an expert AI fitness coach.
 Answer the user using ONLY the context provided.
 Rules:
 - Be clear, practical, and encouraging.
@@ -117,7 +117,7 @@ User: {query}
 Answer:"""
 
     def prompt_general_fitness(self, query: str):
-        return f"""You are Next Rep, an expert AI fitness coach.
+        return f"""You are Fitness Coach, an expert AI fitness coach.
 The knowledge base doesn't cover this specifically, so use your general expertise.
 Rules:
 - Be practical and encouraging.
