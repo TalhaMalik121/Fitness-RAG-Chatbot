@@ -1,7 +1,12 @@
 import axios from 'axios';
 
 // Use environment variable or fallback to localhost for development
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+let API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+
+// Remove trailing slash if present to avoid double slashes like //chat
+if (API_BASE_URL.endsWith('/')) {
+  API_BASE_URL = API_BASE_URL.slice(0, -1);
+}
 
 export const sendChatMessage = async (query) => {
   try {
