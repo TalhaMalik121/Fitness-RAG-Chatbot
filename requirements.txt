@@ -6,3 +6,5 @@ tqdm
 google-generativeai 
 python-dotenv
 groq
+streamlit
+torchvision
